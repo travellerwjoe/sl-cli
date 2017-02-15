@@ -15,7 +15,6 @@ program
     .description('Set conifg info before publish')
     .alias('i')
     .action(() => {
-        if(program.ip || program.dir || program.user || program.pass) return;
         require('../command/init')(ep);
     })
 
@@ -24,7 +23,10 @@ program
     .description('Publish file to server')
     .alias('p')
     .action(() => {
-        process.env.OS.indexOf('Windows') < 0 && (console.log('Please ensure that you are using Windows system.') || process.exit());
+        process
+            .env
+            .OS
+            .indexOf('Windows') < 0 && (console.log('Please ensure that you are using Windows system.') || process.exit());
 
         ep.on('inited', () => {
             require('../command/publish')()
@@ -34,11 +36,12 @@ program
             require('../command/init')(ep);
             return;
         }
-        
-        if(program.ip || program.dir || program.user || program.pass) return;
+
+        // if (program.ip || program.dir || program.user || program.pass) 
+        //     return;
         
         ep.emit('inited');
-        
+
     })
 
 program
@@ -46,14 +49,16 @@ program
     .description('Cancel previous publish')
     .alias('c')
     .action(() => {
-        process.env.OS.indexOf('Windows') < 0 && (console.log('Please ensure that you are using Windows system.') || process.exit());
+        process
+            .env
+            .OS
+            .indexOf('Windows') < 0 && (console.log('Please ensure that you are using Windows system.') || process.exit());
 
-        if(!config.publish || !config.publish.publishedPaths.length){
+        if (!config.publish || !config.publish.publishedPaths.length) {
             console.log('You don\'t have any publish');
             return;
         }
 
-        if(program.ip || program.dir || program.user || program.pass) return;
         require('../command/cancel')();
     })
 
@@ -62,49 +67,46 @@ program
     .description('Clear all publish')
     .alias('r')
     .action(() => {
-        process.env.OS.indexOf('Windows') < 0 && (console.log('Please ensure that you are using Windows system.') || process.exit());
+        process
+            .env
+            .OS
+            .indexOf('Windows') < 0 && (console.log('Please ensure that you are using Windows system.') || process.exit());
 
-        if(!config.publish || !config.publish.publishedPaths.length){
+        if (!config.publish || !config.publish.publishedPaths.length) {
             console.log('You don\'t have any publish');
             return;
         }
 
-        if(program.ip || program.dir || program.user || program.pass) return;
         require('../command/clear')(ep);
     })
 
 program
     .command('config')
     .description('Show config info')
-    .action(()=>{
-        if(program.ip || program.dir || program.user || program.pass) return;
+    .option('-i, --ip <ip>', 'set service ip', (ip) => {
+        require('../command/init')(ep, 'i', ip);
+    })
+    .option('-d, --dir <dir>', 'set publish directory', (dir) => {
+        require('../command/init')(ep, 'd', dir);
+    })
+    .option('-u, --user <user>', 'set service login user', (user) => {
+        require('../command/init')(ep, 'u', user);
+    })
+    .option('-p, --pass <pass>', 'set service login password', (pass) => {
+        require('../command/init')(ep, 'p', pass);
+    })
+    .action(() => {
         require('../command/config')();
     })
 
-program
-    .option('-i, --ip <ip>', 'set service ip',(ip) => {
-        require('../command/init')(ep, 'i', ip);
-    })
-    .option('-d, --dir <dir>', 'set publish directory',(dir) => {
-        require('../command/init')(ep, 'd', dir);
-    })
-    .option('-u, --user <user>', 'set service login user',(user) => {
-        require('../command/init')(ep, 'u', user);
-    })
-    .option('-p, --pass <pass>', 'set service login password',(pass) => {
-        require('../command/init')(ep, 'p', pass);
-    })
-
-program
-    .on('--help', function() {
-        console.log('  Examples:');
-        console.log();
-        console.log('    $ shanglv init');
-        console.log('    $ shanglv publish');
-        console.log('    $ shanglv -i 172.17.1.242');
-        console.log('    $ shanglv publish -d \\部署文件\\V0050大客户\\CRM');        
-        console.log();
-    });
+program.on('--help', function () {
+    console.log('  Examples:');
+    console.log();
+    console.log('    $ shanglv init');
+    console.log('    $ shanglv publish');
+    console.log('    $ shanglv config -i 172.17.1.242');
+    console.log();
+});
 
 if (!process.argv.slice(2).length) {
     program.outputHelp()
