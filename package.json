@@ -1,0 +1,23 @@
+{
+    "name": "shanglv-cli",
+    "version": "0.1.1",
+    "description": "Shanglv51 published CLI tools",
+    "main": "index.js",
+    "bin": {
+        "shanglv": "./bin/shanglv.js"
+    },
+    "dependencies": {
+        "co": "^4.6.0",
+        "co-prompt": "^1.0.0",
+        "commander": "^2.9.0",
+        "eventproxy": "^0.3.5",
+        "moment": "^2.17.1"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Joe.Wu",
+    "license": "ISC"
+}
