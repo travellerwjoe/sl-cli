@@ -9,7 +9,7 @@ const path = require('path');
 
 module.exports = (ep, opt, val) => {
     co(function * () {
-        !opt && (opt = "idup");
+        !opt && (opt = "idups");
         config.publish = config.publish || {};
 
         if (opt.indexOf('i') >= 0) {
@@ -52,12 +52,23 @@ module.exports = (ep, opt, val) => {
             }
         }
 
-        config.publish.publishedPaths = [];
+        if (opt.indexOf('s') >= 0) {
+            let src;
+            while (!src) {
+                src = val
+                    ? val
+                    : yield prompt('Please set file or direcoty that need to be published (separated by semicolon ";"):');
+                config.publish.src = src.split(';');
+            }
+        }
+
+        config.publish.publishedPaths = config.publish.publishedPaths || [];
 
         yield Promise.resolve(fs.writeFile(path.join(__dirname, '../', 'package.json'), JSON.stringify(config, null, 4), 'utf8', (err, res) => {
             err && (console.log(err.message) || process.exit());
             console.log('Done!');
             ep.emit('inited');
+            // process.exit();
         }))
     })
 }

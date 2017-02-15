@@ -11,16 +11,28 @@
                 "type": "tag"
             },
             "E:\\Web\\Joe.Wu\\shanglv-cli"
+        ],
+        [
+            {
+                "raw": "shanglv-cli",
+                "scope": null,
+                "escapedName": "shanglv-cli",
+                "name": "shanglv-cli",
+                "rawSpec": "",
+                "spec": "latest",
+                "type": "tag"
+            },
+            "E:\\Web\\Joe.Wu\\shanglv-cli"
         ]
     ],
-    "_from": "shanglv-cli@latest",
-    "_id": "shanglv-cli@0.1.2",
+    "_from": "shanglv-cli",
+    "_id": "shanglv-cli@0.1.5",
     "_inCache": true,
     "_location": "/shanglv-cli",
     "_nodeVersion": "7.1.0",
     "_npmOperationalInternal": {
         "host": "packages-18-east.internal.npmjs.com",
-        "tmp": "tmp/shanglv-cli-0.1.2.tgz_1487131417605_0.8571766880340874"
+        "tmp": "tmp/shanglv-cli-0.1.5.tgz_1487143910404_0.10570095689035952"
     },
     "_npmUser": {
         "name": "traveller_wjoe",
@@ -40,8 +52,8 @@
     "_requiredBy": [
         "#USER"
     ],
-    "_resolved": "https://registry.npmjs.org/shanglv-cli/-/shanglv-cli-0.1.2.tgz",
-    "_shasum": "3b98971a3c9ad91dedebe901e5807446bf42a5a3",
+    "_resolved": "https://registry.npmjs.org/shanglv-cli/-/shanglv-cli-0.1.5.tgz",
+    "_shasum": "8851b21bf3073aa81ca7b637af2a785768a85804",
     "_shrinkwrap": null,
     "_spec": "shanglv-cli",
     "_where": "E:\\Web\\Joe.Wu\\shanglv-cli",
@@ -62,8 +74,8 @@
     "devDependencies": {},
     "directories": {},
     "dist": {
-        "shasum": "3b98971a3c9ad91dedebe901e5807446bf42a5a3",
-        "tarball": "https://registry.npmjs.org/shanglv-cli/-/shanglv-cli-0.1.2.tgz"
+        "shasum": "8851b21bf3073aa81ca7b637af2a785768a85804",
+        "tarball": "https://registry.npmjs.org/shanglv-cli/-/shanglv-cli-0.1.5.tgz"
     },
     "gitHead": "80c02c53ea222805ea3c595e3cf1f360e9f5da58",
     "keywords": [],
@@ -81,5 +93,5 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "version": "0.1.5"
+    "version": "0.1.6"
 }

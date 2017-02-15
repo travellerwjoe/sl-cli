@@ -7,6 +7,14 @@ const co = require('co');
 const confirm = require('co-prompt').confirm;
 
 module.exports = (ep) => {
+
+    function clearAllPublishedPath() {
+        config.publish.publishedPaths = [];
+
+        fs.writeFileSync(path.join(__dirname, '..', 'package.json'), JSON.stringify(config, null, 4), 'utf8');
+        process.exit();
+    }
+
     co(function * () {
         const isOk = yield confirm('Are you sure(y/n)?');
         if (!isOk) {
@@ -17,11 +25,7 @@ module.exports = (ep) => {
 
         ep.after('cleared', publishedPaths.length, () => {
             console.log('Clear all publish completed!');
-            config.publish.publishedPaths = [];
-            fs.writeFile(path.join(__dirname, '..', 'package.json'), JSON.stringify(config, null, 4), 'utf8', (err, res) => {
-                err && console.log(err.message);
-                process.exit()
-            });
+            clearAllPublishedPath();
         })
 
         for (let i = 0; i < publishedPaths.length; i++) {
@@ -29,7 +33,7 @@ module.exports = (ep) => {
             const rmCmd = `RMDIR ${thisPath} /S /Q`;
 
             child_process.exec(rmCmd, (err, stdout, stderr) => {
-                err && (console.log(err.message) || process.exit());
+                err && (console.log(err.message) || clearAllPublishedPath() || process.exit());
                 console.log(`Clear publish ${thisPath}`);
                 ep.emit('cleared');
             })

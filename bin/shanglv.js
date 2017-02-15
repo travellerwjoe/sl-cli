@@ -35,12 +35,16 @@ program
         if (!config.publish || (!config.publish.ip || !config.publish.dir || !config.publish.user || !config.publish.pass)) {
             require('../command/init')(ep);
             return;
+        }else if (!config.publish.src.length) {
+            require('../command/init')(ep, 's');
+        
+        }else{
+            ep.emit('inited');
         }
 
-        // if (program.ip || program.dir || program.user || program.pass) 
-        //     return;
+        // if (program.ip || program.dir || program.user || program.pass)     return;
+
         
-        ep.emit('inited');
 
     })
 
@@ -95,6 +99,9 @@ program
     .option('-p, --pass <pass>', 'set service login password', (pass) => {
         require('../command/init')(ep, 'p', pass);
     })
+    .option('-s, --src <src>', 'set file or directory that need to be published (separated by ";")', (src) => {
+        require('../command/init')(ep, 's', src);
+    })
     .action(() => {
         require('../command/config')();
     })
@@ -106,6 +113,7 @@ program.on('--help', function () {
     console.log('    $ shanglv publish');
     console.log('    $ shanglv config -i 172.17.1.242');
     console.log();
+    console.log('  Only supported on Windows at this time')
 });
 
 if (!process.argv.slice(2).length) {
