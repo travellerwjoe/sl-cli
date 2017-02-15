@@ -27,7 +27,7 @@ module.exports = () => {
             console.log('Publish completed.');
             console.log(`The published path is '${targetPath}'.`)
 
-            config.publish.lastPath = targetPath;
+            config.publish.publishedPaths.push(targetPath);
             fs.writeFile(path.join(__dirname, '..', 'package.json'), JSON.stringify(config, null, 4), 'utf8', (err, res) => {
                 err && (console.log(err.message) || process.exit());
             })

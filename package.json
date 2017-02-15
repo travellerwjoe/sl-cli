@@ -1,8 +1,53 @@
 {
-    "name": "shanglv-cli",
-    "version": "0.1.2",
-    "description": "Shanglv51 published CLI tools",
-    "main": "index.js",
+    "_args": [
+        [
+            {
+                "raw": "shanglv-cli",
+                "scope": null,
+                "escapedName": "shanglv-cli",
+                "name": "shanglv-cli",
+                "rawSpec": "",
+                "spec": "latest",
+                "type": "tag"
+            },
+            "E:\\Web\\Joe.Wu\\shanglv-cli"
+        ]
+    ],
+    "_from": "shanglv-cli@latest",
+    "_id": "shanglv-cli@0.1.2",
+    "_inCache": true,
+    "_location": "/shanglv-cli",
+    "_nodeVersion": "7.1.0",
+    "_npmOperationalInternal": {
+        "host": "packages-18-east.internal.npmjs.com",
+        "tmp": "tmp/shanglv-cli-0.1.2.tgz_1487131417605_0.8571766880340874"
+    },
+    "_npmUser": {
+        "name": "traveller_wjoe",
+        "email": "traveller_wjoe@sina.com"
+    },
+    "_npmVersion": "3.10.9",
+    "_phantomChildren": {},
+    "_requested": {
+        "raw": "shanglv-cli",
+        "scope": null,
+        "escapedName": "shanglv-cli",
+        "name": "shanglv-cli",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+    },
+    "_requiredBy": [
+        "#USER"
+    ],
+    "_resolved": "https://registry.npmjs.org/shanglv-cli/-/shanglv-cli-0.1.2.tgz",
+    "_shasum": "3b98971a3c9ad91dedebe901e5807446bf42a5a3",
+    "_shrinkwrap": null,
+    "_spec": "shanglv-cli",
+    "_where": "E:\\Web\\Joe.Wu\\shanglv-cli",
+    "author": {
+        "name": "Joe.Wu"
+    },
     "bin": {
         "shanglv": "./bin/shanglv.js"
     },
@@ -13,11 +58,35 @@
         "eventproxy": "^0.3.5",
         "moment": "^2.17.1"
     },
+    "description": "Shanglv51 published CLI tools",
     "devDependencies": {},
+    "directories": {},
+    "dist": {
+        "shasum": "3b98971a3c9ad91dedebe901e5807446bf42a5a3",
+        "tarball": "https://registry.npmjs.org/shanglv-cli/-/shanglv-cli-0.1.2.tgz"
+    },
+    "gitHead": "80c02c53ea222805ea3c595e3cf1f360e9f5da58",
+    "keywords": [],
+    "license": "ISC",
+    "main": "index.js",
+    "maintainers": [
+        {
+            "name": "traveller_wjoe",
+            "email": "traveller_wjoe@sina.com"
+        }
+    ],
+    "name": "shanglv-cli",
+    "optionalDependencies": {},
+    "readme": "ERROR: No README data found!",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "keywords": [],
-    "author": "Joe.Wu",
-    "license": "ISC"
+    "version": "0.1.2",
+    "publish": {
+        "ip": "172.17.1.242",
+        "dir": "\\部署文件\\V0050大客户\\CRM",
+        "user": "test1",
+        "pass": "Ww123456",
+        "publishedPaths": []
+    }
 }

@@ -52,6 +52,8 @@ module.exports = (ep, opt, val) => {
             }
         }
 
+        config.publish.publishedPaths = [];
+
         yield Promise.resolve(fs.writeFile(path.join(__dirname, '../', 'package.json'), JSON.stringify(config, null, 4), 'utf8', (err, res) => {
             err && (console.log(err.message) || process.exit());
             console.log('Done!');

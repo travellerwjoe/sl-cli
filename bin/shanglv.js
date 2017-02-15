@@ -48,18 +48,36 @@ program
     .action(() => {
         process.env.OS.indexOf('Windows') < 0 && (console.log('Please ensure that you are using Windows system.') || process.exit());
 
-        if(!config.publish||!config.publish.lastPath){
-            console.log('You don\'t have any publication');
+        if(!config.publish || !config.publish.publishedPaths.length){
+            console.log('You don\'t have any publish');
             return;
         }
 
+        if(program.ip || program.dir || program.user || program.pass) return;
         require('../command/cancel')();
+    })
+
+program
+    .command('clear')
+    .description('Clear all publish')
+    .alias('r')
+    .action(() => {
+        process.env.OS.indexOf('Windows') < 0 && (console.log('Please ensure that you are using Windows system.') || process.exit());
+
+        if(!config.publish || !config.publish.publishedPaths.length){
+            console.log('You don\'t have any publish');
+            return;
+        }
+
+        if(program.ip || program.dir || program.user || program.pass) return;
+        require('../command/clear')(ep);
     })
 
 program
     .command('config')
     .description('Show config info')
     .action(()=>{
+        if(program.ip || program.dir || program.user || program.pass) return;
         require('../command/config')();
     })
 
