@@ -1,6 +1,6 @@
 {
     "name": "shanglv-cli",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Shanglv51 published CLI tools",
     "main": "index.js",
     "bin": {

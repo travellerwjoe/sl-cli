@@ -52,7 +52,7 @@ module.exports = (ep, opt, val) => {
             }
         }
 
-        yield Promise.resolve(fs.writeFile(path.join(__dirname, '../', 'package.json'), JSON.stringify(config), 'utf8', (err, res) => {
+        yield Promise.resolve(fs.writeFile(path.join(__dirname, '../', 'package.json'), JSON.stringify(config, null, 4), 'utf8', (err, res) => {
             err && (console.log(err.message) || process.exit());
             console.log('Done!');
             ep.emit('inited');

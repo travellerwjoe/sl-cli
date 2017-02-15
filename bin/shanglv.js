@@ -57,6 +57,13 @@ program
     })
 
 program
+    .command('config')
+    .description('Show config info')
+    .action(()=>{
+        require('../command/config')();
+    })
+
+program
     .option('-i, --ip <ip>', 'set service ip',(ip) => {
         require('../command/init')(ep, 'i', ip);
     })
