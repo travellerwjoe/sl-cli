@@ -3,18 +3,28 @@ const process = require('process');
 const config = require('../package');
 const path = require('path');
 const fs = require('fs');
+const co = require('co');
+const confirm = require('co-prompt').confirm;
 
 module.exports = () => {
-    const lastPath = config.publish.publishedPaths[config.publish.publishedPaths.length - 1];
-    const rmCmd = `RMDIR ${lastPath} /S /Q`;
+    co(function * () {
+        const isOk = yield confirm('Are you sure(y/n)?');
+        if (!isOk) {
+            process.exit()
+        }
 
-    child_process.exec(rmCmd, (err, stdout, stderr) => {
-        err && (console.log(err.message) || process.exit());
-        console.log(`Cancel publish ${lastPath}`);
+        const lastPath = config.publish.publishedPaths[config.publish.publishedPaths.length - 1];
+        const rmCmd = `RMDIR ${lastPath} /S /Q`;
 
-        config.publish.publishedPaths.pop();
-        fs.writeFile(path.join(__dirname, '..', 'package.json'), JSON.stringify(config, null, 4), (err, res) => {
+        child_process.exec(rmCmd, (err, stdout, stderr) => {
             err && (console.log(err.message) || process.exit());
+            console.log(`Cancel publish ${lastPath}`);
+
+            config.publish.publishedPaths.pop();
+            fs.writeFile(path.join(__dirname, '..', 'package.json'), JSON.stringify(config, null, 4), (err, res) => {
+                err && console.log(err.message);
+                process.exit();
+            })
         })
     })
 }
