@@ -7,17 +7,18 @@ const config = require('../package');
 const fs = require('fs');
 const path = require('path');
 
-module.exports = (ep, opt, val) => {
+module.exports = (ep, opt, val, cmd) => {
     co(function * () {
         !opt && (opt = "idups");
         config.publish = config.publish || {};
 
+        console.log('Please input the following config info.')
         if (opt.indexOf('i') >= 0) {
             let ip;
             while (!ip) {
                 ip = val
                     ? val
-                    : yield prompt('Please set the service ip :');
+                    : yield prompt('Remote service ip :');
                 config.publish.ip = ip;
             }
         }
@@ -27,7 +28,7 @@ module.exports = (ep, opt, val) => {
             while (!dir) {
                 dir = val
                     ? val
-                    : yield prompt('Please set the publish direcoty path:');
+                    : yield prompt('Publish direcoty path:');
                 config.publish.dir = dir
             }
         }
@@ -37,7 +38,7 @@ module.exports = (ep, opt, val) => {
             while (!user) {
                 user = val
                     ? val
-                    : yield prompt('Please set the user account for login:');
+                    : yield prompt('User account for login:');
                 config.publish.user = user
             }
         }
@@ -47,7 +48,7 @@ module.exports = (ep, opt, val) => {
             while (!pass) {
                 pass = val
                     ? val
-                    : yield password('Please set the password for login:');
+                    : yield password('User password for login:');
                 config.publish.pass = pass
             }
         }
@@ -57,8 +58,10 @@ module.exports = (ep, opt, val) => {
             while (!src) {
                 src = val
                     ? val
-                    : yield prompt('Please set file or direcoty that need to be published (separated by semicolon ";"):');
-                config.publish.src = src.split(';');
+                    : yield prompt('File or direcoty that need to be published (separated by semicolon ";"):');
+                config.publish.src = src
+                    .split(';')
+                    .filter((item, index) => !!item);
             }
         }
 
@@ -67,7 +70,10 @@ module.exports = (ep, opt, val) => {
         yield Promise.resolve(fs.writeFile(path.join(__dirname, '../', 'package.json'), JSON.stringify(config, null, 4), 'utf8', (err, res) => {
             err && (console.log(err.message) || process.exit());
             console.log('Done!');
-            ep.emit('inited');
+            cmd === "init"
+            // ? process.exit()
+                ? process.exit()
+                : ep.emit('inited');
             // process.exit();
         }))
     })

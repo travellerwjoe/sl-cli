@@ -15,7 +15,7 @@ program
     .description('Set conifg info before publish')
     .alias('i')
     .action(() => {
-        require('../command/init')(ep);
+        require('../command/init')(ep, null, null, 'init');
     })
 
 program
@@ -35,17 +35,23 @@ program
         if (!config.publish || (!config.publish.ip || !config.publish.dir || !config.publish.user || !config.publish.pass)) {
             require('../command/init')(ep);
             return;
-        }else if (!config.publish.src.length) {
+        } else if (!config.publish.src.length) {
             require('../command/init')(ep, 's');
-        
-        }else{
+
+        } else {
             ep.emit('inited');
         }
 
         // if (program.ip || program.dir || program.user || program.pass)     return;
 
-        
+    })
 
+program
+    .command('watch')
+    .description('Watch the file or directory changes and publishes them')
+    .alias('w')
+    .action(() => {
+        require('../command/watch')();
     })
 
 program

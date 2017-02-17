@@ -6,7 +6,7 @@ const config = require('../package');
 const fs = require('fs');
 const path = require('path');
 
-module.exports = () => {
+module.exports = (cmd) => {
     co(function * () {
         const cwd = process.cwd();
 
@@ -50,15 +50,14 @@ module.exports = () => {
             const stat = fs.statSync(thisPath);
             const isDir = stat.isDirectory();
 
-
             const symbol = isDir
                 ? 'd'
                 : 'f';
             const finalPath = path.join(targetPath, item);
 
             return `echo ${symbol} | xcopy ${item} ${finalPath} /Y ${isDir
-                    ? '/E'
-                    : ''}`
+                ? '/E'
+                : ''}`
         }).join(' & ');
 
         // } else { } return; xCopyCmd = `echo d | xcopy dist ${targetPath}\\dist\\ /Y
@@ -79,6 +78,7 @@ module.exports = () => {
                 .push(targetPath);
             fs.writeFile(path.join(__dirname, '..', 'package.json'), JSON.stringify(config, null, 4), 'utf8', (err, res) => {
                 err && (console.log(err.message) || process.exit());
+                // cmd !== "watch" && process.exit();
             })
         }))
         yield Promise.resolve(child_process.exec(clipCmd, (err, stdout, stderr) => {
