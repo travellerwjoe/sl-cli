@@ -12,7 +12,7 @@ module.exports = (ep, opt, val, cmd) => {
         !opt && (opt = "idups");
         config.publish = config.publish || {};
 
-        console.log('Please input the following config info.')
+        opt === "idups" && console.log('Please input the following config info.');
         if (opt.indexOf('i') >= 0) {
             let ip;
             while (!ip) {
