@@ -1,4 +1,3 @@
-const child_process = require('child_process');
 const process = require('process');
 const co = require('co');
 const prompt = require('co-prompt');
@@ -6,9 +5,10 @@ const password = prompt.password;
 const config = require('../package');
 const fs = require('fs');
 const path = require('path');
+const func = require('../utils/func');
 
 module.exports = (ep, opt, val, cmd) => {
-    co(function * () {
+    co(function* () {
         !opt && (opt = "idups");
         config.publish = config.publish || {};
 
@@ -67,14 +67,16 @@ module.exports = (ep, opt, val, cmd) => {
 
         config.publish.publishedPaths = config.publish.publishedPaths || [];
 
-        yield Promise.resolve(fs.writeFile(path.join(__dirname, '../', 'package.json'), JSON.stringify(config, null, 4), 'utf8', (err, res) => {
-            err && (console.log(err.message) || process.exit());
+        const filename=path.join(__dirname, '../', 'package.json');
+        const content=JSON.stringify(config, null, 4);
+
+        //写入配置到package.json
+        yield func.writeFile(filename,content).then(()=>{
             console.log('Done!');
-            cmd === "init"
-            // ? process.exit()
-                ? process.exit()
-                : ep.emit('inited');
-            // process.exit();
-        }))
+        })
+
+        cmd === "init"
+            ? process.exit()
+            : ep.emit('inited');
     })
 }

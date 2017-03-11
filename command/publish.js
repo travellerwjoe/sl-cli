@@ -1,13 +1,13 @@
-const child_process = require('child_process');
 const process = require('process');
 const moment = require('moment');
 const co = require('co');
 const config = require('../package');
 const fs = require('fs');
 const path = require('path');
+const func = require('../utils/func');
 
 module.exports = (cmd) => {
-    co(function * () {
+    co(function* () {
         const cwd = process.cwd();
 
         const ip = config.publish.ip;
@@ -60,15 +60,11 @@ module.exports = (cmd) => {
                 : ''}`
         }).join(' & ');
 
-        // } else { } return; xCopyCmd = `echo d | xcopy dist ${targetPath}\\dist\\ /Y
-        // /E & echo f | xcopy index_prod.html ${targetPath}\\index_prod.html /Y`;
+        //执行net命令联通目标计算机
+        yield func.exec(netCmd)
 
-        yield Promise.resolve(child_process.exec(netCmd, (err, stdout, stderr) => {
-            err && (console.log(err.message) || process.exit());
-        }))
-
-        yield Promise.resolve(child_process.exec(xCopyCmd, (err, stdout, stderr) => {
-            err && (console.log(err.message) || process.exit());
+        //执行xCopy命令复制文件并将复制目标路径保存至配置中
+        yield func.exec(xCopyCmd).then(() => {
             console.log('Publish completed.');
             console.log(`The published path is '${targetPath}'.`)
 
@@ -76,16 +72,19 @@ module.exports = (cmd) => {
                 .publish
                 .publishedPaths
                 .push(targetPath);
-            fs.writeFile(path.join(__dirname, '..', 'package.json'), JSON.stringify(config, null, 4), 'utf8', (err, res) => {
-                err && (console.log(err.message) || process.exit());
-                // cmd !== "watch" && process.exit();
-            })
-        }))
-        yield Promise.resolve(child_process.exec(clipCmd, (err, stdout, stderr) => {
-            err && (console.log(err.message) || process.exit());
+
+            const filename = path.join(__dirname, '..', 'package.json');
+            const content = JSON.stringify(config, null, 4);
+
+            func.writeFile(filename, content);
+        })
+
+        //将目标路径加入剪贴板
+        yield func.exec(clipCmd).then(()=>{
             console.log('Path has been clipped.');
-        }))
+        })
     }).catch((err) => {
         err && console.log(err.stack);
     })
 }
+

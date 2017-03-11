@@ -1,4 +1,3 @@
-const child_process = require('child_process');
 const process = require('process');
 const config = require('../package');
 const path = require('path');
@@ -23,15 +22,18 @@ module.exports = (ep) => {
 
         const publishedPaths = config.publish.publishedPaths;
 
+        //清理删除所有目标文件后清空配置文件中的目标路径
         ep.after('cleared', publishedPaths.length, () => {
             console.log('Clear all publish completed!');
             clearAllPublishedPath();
         })
 
+        //执行RMIDIR命令清理删除所有配置文件中的目标路径
         for (let i = 0; i < publishedPaths.length; i++) {
             const thisPath = publishedPaths[i];
             const rmCmd = `RMDIR ${thisPath} /S /Q`;
 
+            
             child_process.exec(rmCmd, (err, stdout, stderr) => {
                 err && (console.log(err.message) || clearAllPublishedPath() || process.exit());
                 console.log(`Clear publish ${thisPath}`);
