@@ -58,9 +58,9 @@ module.exports = (ep, opt, val, cmd) => {
             while (!src) {
                 src = val
                     ? val
-                    : yield prompt('File or direcoty that need to be published (separated by semicolon ";"):');
+                    : yield prompt('File or direcoty that need to be published (separated by comma ","):');
                 config.publish.src = src
-                    .split(';')
+                    .split(',')
                     .filter((item, index) => !!item);
             }
         }
